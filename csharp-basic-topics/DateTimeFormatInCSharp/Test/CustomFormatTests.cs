@@ -44,8 +44,8 @@ namespace Test
             Console.WriteLine(datetime.ToString("ddd, d MMMM", CultureInfo.CreateSpecificCulture("en-US")));
             Console.WriteLine(datetime.ToString("dddd, d MMMM", CultureInfo.CreateSpecificCulture("en-US")));
 
-            Assert.AreEqual(@$"Fri, 4 August{Environment.NewLine}
-                                Friday, 4 August{Environment.NewLine}", sw.ToString());
+            Assert.AreEqual($"Fri, 4 August{Environment.NewLine}" +
+                                $"Friday, 4 August{Environment.NewLine}", sw.ToString());
         }
 
         [TestMethod]
@@ -58,8 +58,8 @@ namespace Test
             Console.WriteLine(datetime.ToString("%M", CultureInfo.CreateSpecificCulture("en-US")));
             Console.WriteLine(datetime.ToString("MM", CultureInfo.CreateSpecificCulture("en-US")));
 
-            Assert.AreEqual(@$"8{Environment.NewLine}
-                                08{Environment.NewLine}", sw.ToString());
+            Assert.AreEqual($"8{Environment.NewLine}" +
+                                $"08{Environment.NewLine}", sw.ToString());
         }
 
         [TestMethod]
@@ -72,8 +72,8 @@ namespace Test
             Console.WriteLine(datetime.ToString("MMM", CultureInfo.CreateSpecificCulture("en-US")));
             Console.WriteLine(datetime.ToString("MMMM", CultureInfo.CreateSpecificCulture("en-US")));
 
-            Assert.AreEqual(@$"Aug{Environment.NewLine}
-                                August{Environment.NewLine}", sw.ToString());
+            Assert.AreEqual($"Aug{Environment.NewLine}" +
+                                $"August{Environment.NewLine}", sw.ToString());
         }
 
         [TestMethod]
@@ -86,8 +86,8 @@ namespace Test
             Console.WriteLine(datetime.ToString("%d", CultureInfo.CreateSpecificCulture("en-US")));
             Console.WriteLine(datetime.ToString(" y", CultureInfo.CreateSpecificCulture("en-US")).Trim());
 
-            Assert.AreEqual(@$"4{Environment.NewLine}
-                                17{Environment.NewLine}", sw.ToString());
+            Assert.AreEqual($"4{Environment.NewLine}" +
+                                $"17{Environment.NewLine}", sw.ToString());
         }
 
         [TestMethod]
@@ -102,8 +102,10 @@ namespace Test
             Console.WriteLine(datetime.ToString("yyy", CultureInfo.CreateSpecificCulture("en-US")));
             Console.WriteLine(datetime.ToString("yyyy", CultureInfo.CreateSpecificCulture("en-US")));
 
-            Assert.AreEqual(@$"1{Environment.NewLine}
-                                01{Environment.NewLine}", sw.ToString());
+            Assert.AreEqual($"1{Environment.NewLine}" +
+                                $"01{Environment.NewLine}" +
+                                $"2001{Environment.NewLine}" +
+                                $"2001{Environment.NewLine}", sw.ToString());
         }
 
         [TestMethod]
@@ -116,8 +118,8 @@ namespace Test
             Console.WriteLine(datetime.ToString("%h", CultureInfo.CreateSpecificCulture("en-US")));
             Console.WriteLine(datetime.ToString("hh", CultureInfo.CreateSpecificCulture("en-US")));
 
-            Assert.AreEqual(@$"10{Environment.NewLine}
-                                10{Environment.NewLine}", sw.ToString());
+            Assert.AreEqual($"10{Environment.NewLine}" +
+                                $"10{Environment.NewLine}", sw.ToString());
         }
 
         [TestMethod]
@@ -130,8 +132,8 @@ namespace Test
             Console.WriteLine(datetime.ToString("%H", CultureInfo.CreateSpecificCulture("en-US")));
             Console.WriteLine(datetime.ToString("HH", CultureInfo.CreateSpecificCulture("en-US")));
 
-            Assert.AreEqual(@$"22{Environment.NewLine}
-                                22{Environment.NewLine}", sw.ToString());
+            Assert.AreEqual($"22{Environment.NewLine}" +
+                                $"22{Environment.NewLine}", sw.ToString());
         }
 
         [TestMethod]
@@ -144,8 +146,8 @@ namespace Test
             Console.WriteLine(datetime.ToString("%m", CultureInfo.CreateSpecificCulture("en-US")));
             Console.WriteLine(datetime.ToString("mm", CultureInfo.CreateSpecificCulture("en-US")));
 
-            Assert.AreEqual(@$"35{Environment.NewLine}
-                                35{Environment.NewLine}", sw.ToString());
+            Assert.AreEqual($"35{Environment.NewLine}" +
+                                $"35{Environment.NewLine}", sw.ToString());
         }
 
         [TestMethod]
@@ -158,8 +160,8 @@ namespace Test
             Console.WriteLine(datetime.ToString("%s", CultureInfo.CreateSpecificCulture("en-US")));
             Console.WriteLine(datetime.ToString("ss", CultureInfo.CreateSpecificCulture("en-US")));
 
-            Assert.AreEqual(@$"15{Environment.NewLine}
-                                15{Environment.NewLine}", sw.ToString());
+            Assert.AreEqual($"15{Environment.NewLine}" +
+                                $"15{Environment.NewLine}", sw.ToString());
         }
 
         [TestMethod]
@@ -286,6 +288,35 @@ namespace Test
             Assert.AreEqual($"AD{Environment.NewLine}" +
                                 $"AD{Environment.NewLine}" +
                                 $"d. C.{Environment.NewLine}", sw.ToString());
+        }
+
+        [TestMethod]
+        public void WhenUsingCustomTimeSeparator_ThenCustomSeparatorIsUsed()
+        {
+            var sw = new StringWriter();
+            Console.SetOut(sw);
+
+            var datetime = new DateTime(2017, 8, 24, 4, 22, 35, 15);
+            var formatInfo = CultureInfo.CreateSpecificCulture("en-US").DateTimeFormat;
+            formatInfo.TimeSeparator = ";";
+
+            Console.WriteLine(datetime.ToString("HH:mm:ss", formatInfo));
+
+            Assert.AreEqual($"04;22;35{Environment.NewLine}", sw.ToString());
+        }
+
+        [TestMethod]
+        public void WhenUsingCustomDateSeparator_ThenCustomSeparatorIsUsed()
+        {
+            var sw = new StringWriter();
+            Console.SetOut(sw);
+
+            var datetime = new DateTime(2017, 8, 24);
+            var formatInfo = CultureInfo.CreateSpecificCulture("en-US").DateTimeFormat;
+            formatInfo.DateSeparator = "-";
+            Console.WriteLine(datetime.ToString("dd/MM/yyyy", formatInfo));
+
+            Assert.AreEqual($"24-08-2017{Environment.NewLine}", sw.ToString());
         }
     }
 }

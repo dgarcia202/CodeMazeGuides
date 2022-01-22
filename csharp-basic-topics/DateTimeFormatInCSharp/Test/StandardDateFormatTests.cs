@@ -32,9 +32,9 @@ namespace Test
             Console.WriteLine(datetime.ToString("d", CultureInfo.CreateSpecificCulture("es-ES")));
             Console.WriteLine(datetime.ToString("d", CultureInfo.CreateSpecificCulture("ja-JP")));
 
-            Assert.AreEqual(@$"8/24/2017{Environment.NewLine}
-                                24/8/2017{Environment.NewLine}
-                                2017/08/24{Environment.NewLine}", sw.ToString());
+            Assert.AreEqual($"8/24/2017{Environment.NewLine}" +
+                                $"24/8/2017{Environment.NewLine}" +
+                                $"2017/08/24{Environment.NewLine}", sw.ToString());
         }
 
         [TestMethod]
@@ -80,9 +80,9 @@ namespace Test
             Console.WriteLine(datetime.ToString("D", CultureInfo.CreateSpecificCulture("es-ES")));
             Console.WriteLine(datetime.ToString("D", CultureInfo.CreateSpecificCulture("de-DE")));
 
-            Assert.AreEqual(@$"Thursday, August 24, 2017{Environment.NewLine}
-                                jueves, 24 de agosto de 2017{Environment.NewLine}
-                                Donnerstag, 24. August 2017{Environment.NewLine}", sw.ToString());
+            Assert.AreEqual($"Thursday, August 24, 2017{Environment.NewLine}" +
+                                $"jueves, 24 de agosto de 2017{Environment.NewLine}" +
+                                $"Donnerstag, 24. August 2017{Environment.NewLine}", sw.ToString());
         }
     }
 }

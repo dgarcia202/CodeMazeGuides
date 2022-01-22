@@ -18,8 +18,8 @@ namespace Test
             Console.WriteLine(datetime.ToString("t", CultureInfo.CreateSpecificCulture("en-US")));
             Console.WriteLine(datetime.ToString("t", CultureInfo.CreateSpecificCulture("es-ES")));
 
-            Assert.AreEqual(@$"2:35 PM{Environment.NewLine}
-                                14:35{Environment.NewLine}", sw.ToString());
+            Assert.AreEqual($"2:35 PM{Environment.NewLine}" +
+                                $"14:35{Environment.NewLine}", sw.ToString());
         }
 
         [TestMethod]
@@ -32,8 +32,8 @@ namespace Test
             Console.WriteLine(datetime.ToString("T", CultureInfo.CreateSpecificCulture("en-US")));
             Console.WriteLine(datetime.ToString("T", CultureInfo.CreateSpecificCulture("es-ES")));
 
-            Assert.AreEqual(@$"2:35 PM{Environment.NewLine}
-                                14:35{Environment.NewLine}", sw.ToString());
+            Assert.AreEqual($"2:35:00 PM{Environment.NewLine}" +
+                                $"14:35:00{Environment.NewLine}", sw.ToString());
         }
     }
 }
