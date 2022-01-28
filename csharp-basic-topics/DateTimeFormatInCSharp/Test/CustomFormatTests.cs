@@ -318,5 +318,31 @@ namespace Test
 
             Assert.AreEqual($"24-08-2017{Environment.NewLine}", sw.ToString());
         }
+
+        [TestMethod]
+        public void WhenUsingLiteralCharacters_ThenCharactersAppearUnchanged()
+        {
+            var sw = new StringWriter();
+            Console.SetOut(sw);
+
+            var datetime = new DateTime(2017, 8, 24, 4, 22, 35, 15);
+            Console.WriteLine(datetime.ToString("dd/MM/yyyy hh:mm:ss EST", CultureInfo.CreateSpecificCulture("en-US")));
+
+            Assert.AreEqual($"24/08/2017 04:22:35 EST{Environment.NewLine}", sw.ToString());
+        }
+
+        [TestMethod]
+        public void WhenUsingFormatSpecifiersAsLiteralCharacters_ThenCharactersAppearInTheOutput()
+        {
+            var sw = new StringWriter();
+            Console.SetOut(sw);
+
+            var datetime = new DateTime(2017, 8, 24, 4, 22, 35, 15);
+            Console.WriteLine(datetime.ToString("dd/MM/yyyy hh:mm:ss \\g\\m\\t", CultureInfo.CreateSpecificCulture("en-US")));
+            Console.WriteLine(datetime.ToString("dd/MM/yyyy hh:mm:ss 'gmt'", CultureInfo.CreateSpecificCulture("en-US")));
+
+            Assert.AreEqual($"24/08/2017 04:22:35 gmt{Environment.NewLine}" +
+                                $"24/08/2017 04:22:35 gmt{Environment.NewLine}", sw.ToString());
+        }
     }
 }
